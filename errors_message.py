@@ -8,5 +8,5 @@ errors = {
 }
 
 
-def pm(error_code, number_line):
-    return f'Line {number_line}: {error_code} {errors[error_code]}'
+def pm(error_code, number_line, path):
+    return f'{path}: Line {number_line}: {error_code} {errors[error_code]}'
