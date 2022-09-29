@@ -4,7 +4,10 @@ errors = {
     'S003': 'Unnecessary semicolon',
     'S004': 'At least two spaces required before inline comments',
     'S005': 'TODO found',
-    'S006': 'More than two blank lines used before this line'
+    'S006': 'More than two blank lines used before this line',
+    'S007': 'Too many spaces after construction_name ',
+    'S008': 'Class name class_name should be written in CamelCase',
+    'S009': 'Function name function_name should be written in snake_case'
 }
 
 
