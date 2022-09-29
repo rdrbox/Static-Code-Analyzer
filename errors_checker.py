@@ -32,6 +32,12 @@ def clear_string(line):
     return clear_code_string(result)
 
 
+def check_def_class(line):
+    if re.search(r'\bdef\b|\bclass\b', line):
+        return line.split()[0]
+    return False
+
+
 def s000(line: str, number_line: int) -> bool:
     if line.isspace():
         string_length[number_line] = 0
@@ -99,22 +105,53 @@ def s006(number_line, zero=0):
     return
 
 
+def s007(line):
+    """[S007] Too many spaces after construction_name (def or class)."""
+
+    if not re.match(r'\s*(\bdef\b|\bclass\b)\s\w+', line):
+        return 'S007'
+
+
+def s008(line):
+    """[S008] Class name class_name should be written in CamelCase."""
+
+    if not re.match(r'[A-Z]\w[^_,(,)]+', line.split()[1]):
+        return 'S008', re.sub(r':', '', line.split()[1])
+
+
+def s009(line):
+    """[S009] Function name function_name should be written in snake_case."""
+
+    if not re.match(r'\b[a-z0-9_]+', line.split()[1]):
+        return 'S009', re.sub(r'\(.*\):', '', line.split()[1])
+
+
 def checker(line, number_line):
     nl = clean_line(line)
     check_list = []
     if s000(nl, number_line):
         if s001(nl):
-            check_list.append(s001(nl))
+            check_list.append(tuple([s001(nl), None]))
         if s002(nl):
-            check_list.append(s002(nl))
+            check_list.append(tuple([s002(nl), None]))
         if s003(nl):
-            check_list.append(s003(nl))
+            check_list.append(tuple([s003(nl), None]))
         if s004(nl):
-            check_list.append(s004(nl))
+            check_list.append(tuple([s004(nl), None]))
         if s005(nl):
-            check_list.append(s005(nl))
-
+            check_list.append(tuple([s005(nl), None]))
         if s006(number_line):
-            check_list.append(s006(number_line))
+            check_list.append(tuple([s006(number_line), None]))
+
+        check = check_def_class(nl)
+        if check:
+            if s007(nl):
+                check_list.append(tuple([s007(nl), check]))
+            if check == 'def':
+                if s009(line):
+                    check_list.append(s009(line))
+            elif check == 'class':
+                if s008(line):
+                    check_list.append(s008(line))
 
     return check_list

@@ -13,7 +13,7 @@ if __name__ == "__main__":
             if check_list:
                 line_message = []
                 for x, y in check_list:
-                    line_message.append(pm(x, y, pf(fi.filename())))
+                    line_message.append(pm(x, fi.filelineno(), pf(fi.filename()), y))
                 line_message.sort()
                 for message in line_message:
                     print(message)
