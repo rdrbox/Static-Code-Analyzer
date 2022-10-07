@@ -18,5 +18,4 @@ def scan_base_path(link=base_path()):
 
 
 def path_file(file_name):
-    # dirname = os.path.relpath
     return os.path.relpath(file_name)
