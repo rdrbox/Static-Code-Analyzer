@@ -53,14 +53,14 @@ def s001(line, max_line=79):
     """ [S001] Too long """
 
     if len(line) > max_line:
-        return 'S001'
+        return 's001'
 
 
 def s002(line, number_space=4, control=0):
     """[S002] Indentation is not a multiple of four"""
 
     if (len(line) - len(line.lstrip())) % number_space != control:
-        return 'S002'
+        return 's002'
 
 
 def s003(line):
@@ -71,7 +71,7 @@ def s003(line):
     else:
         string = clear_string(line)
         if re.findall(r';', string):
-            return 'S003'
+            return 's003'
         return False
 
 
@@ -80,7 +80,7 @@ def s004(line):
 
     if is_inline_comment(line):
         if re.search(r'\s{2}#.*$', line) is None:
-            return 'S004'
+            return 's004'
         return False
 
 
@@ -91,7 +91,7 @@ def s005(line):
         control = -1
         if line.lower().find('todo') == control:
             return
-        return 'S005'
+        return 's005'
 
 
 def s006(number_line, zero=0):
@@ -101,7 +101,7 @@ def s006(number_line, zero=0):
         if all([string_length[number_line - 1] == zero,
                 string_length[number_line - 2] == zero,
                 string_length[number_line - 3] == zero]):
-            return 'S006'
+            return 's006'
     return
 
 
@@ -109,21 +109,7 @@ def s007(line):
     """[S007] Too many spaces after construction_name (def or class)."""
 
     if not re.match(r'\s*(\bdef\b|\bclass\b)\s\w+', line):
-        return 'S007'
-
-
-def s008(line):
-    """[S008] Class name class_name should be written in CamelCase."""
-
-    if not re.match(r'[A-Z]\w[^_,(,)]+', line.split()[1]):
-        return 'S008', re.sub(r':', '', line.split()[1])
-
-
-def s009(line):
-    """[S009] Function name function_name should be written in snake_case."""
-
-    if not re.match(r'\b[a-z0-9_]+', line.split()[1]):
-        return 'S009', re.sub(r'\(.*\):', '', line.split()[1])
+        return 's007'
 
 
 def checker(line, number_line):
@@ -147,11 +133,5 @@ def checker(line, number_line):
         if check:
             if s007(nl):
                 check_list.append(tuple([s007(nl), check]))
-            if check == 'def':
-                if s009(line):
-                    check_list.append(s009(line))
-            elif check == 'class':
-                if s008(line):
-                    check_list.append(s008(line))
 
     return check_list

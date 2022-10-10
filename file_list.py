@@ -9,11 +9,11 @@ def base_path():
 def scan_base_path(link=base_path()):
     link_list = []
     if os.path.isfile(link):
-        link_list.append(os.fspath(link).replace(os.sep, '/'))
+        link_list.append(os.fspath(link))
     elif os.path.isdir(link):
         for root, dirs, files in os.walk(link):
             for file in files:
-                link_list.append(os.path.join(root, file).replace(os.sep, '/'))
+                link_list.append(os.path.join(root, file))
     return tuple(link_list)
 
 
